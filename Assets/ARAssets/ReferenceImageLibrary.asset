@@ -24,7 +24,7 @@ MonoBehaviour:
       m_GuidLow: 13791214632427263342
       m_GuidHigh: 5204472029449984216
     m_Size: {x: 0.13, y: 0.108107045}
-    m_SpecifySize: 1
+    m_SpecifySize: 0
     m_Name: Gieo
     m_Texture: {fileID: 0}
   - m_SerializedGuid:
@@ -34,6 +34,6 @@ MonoBehaviour:
       m_GuidLow: 1636006319120036856
       m_GuidHigh: 14548993666213708730
     m_Size: {x: 0.3, y: 0.2794922}
-    m_SpecifySize: 1
+    m_SpecifySize: 0
     m_Name: SDDBP
     m_Texture: {fileID: 0}
