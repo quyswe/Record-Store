@@ -2,24 +2,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
 
 public class SongControls : MonoBehaviour
 {
     private Button[] buttons;
-    [SerializeField] private AlbumSO albumSOs;
     private AudioSource audioSource;
-    int currentTrack = 0;
+    private AlbumSO albumSO;
+    private int currentTrack;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         buttons = GetComponentsInChildren<Button>();
     }
-    private void Start()
+    private void OnEnable()
     {
-        PlayTrack();
+        StaticEventHandler.OnStartFirstSong += HandleStartFirstSong;
+    }
+    private void OnDisable()
+    {
+        StaticEventHandler.OnStartFirstSong -= HandleStartFirstSong;
+    }
+    private void HandleStartFirstSong(AlbumSO album, PhysicalCDAlbum physicalCDAlbum)
+    {
+        if (physicalCDAlbum == PhysicalCDAlbum.Gieo)
+        {
+            albumSO = album;
+            currentTrack = 0;
+            PlayTrack();
+        }
+        if (physicalCDAlbum == PhysicalCDAlbum.SDDBP)
+        {
+            albumSO = album;
+            currentTrack = 0;
+            PlayTrack();
+        }
 
     }
-    List<AudioClip> playlist;
+    private void Start()
+    {
+
+        buttons[0].onClick.AddListener(PlayPreviousTrack);
+        buttons[1].onClick.AddListener(PauseTrack);
+        buttons[2].onClick.AddListener(PlayNextTrack);
+    }
 
 
     void PlayPreviousTrack()
@@ -33,7 +59,7 @@ public class SongControls : MonoBehaviour
 
     void PlayNextTrack()
     {
-        if (currentTrack < playlist.Count - 1)
+        if (currentTrack < albumSO.songs.Count - 1)
         {
             currentTrack++;
             PlayTrack();
@@ -54,7 +80,18 @@ public class SongControls : MonoBehaviour
 
     void PlayTrack()
     {
-        audioSource.clip = playlist[currentTrack];
-        audioSource.Play();
+
+        if (albumSO.name == "Gieo")
+        {
+            audioSource.clip = albumSO.songs[currentTrack].songClip;
+            audioSource.Play();
+            StaticEventHandler.InvokeSongChanged(albumSO.songs[currentTrack], PhysicalCDAlbum.Gieo);
+        }
+        if (albumSO.name == "SDDBP")
+        {
+            audioSource.clip = albumSO.songs[currentTrack].songClip;
+            audioSource.Play();
+            StaticEventHandler.InvokeSongChanged(albumSO.songs[currentTrack], PhysicalCDAlbum.SDDBP);
+        }
     }
 }

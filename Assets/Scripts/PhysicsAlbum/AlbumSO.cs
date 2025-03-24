@@ -7,8 +7,7 @@ public class AlbumSO : ScriptableObject
     public Sprite artistImage;
     public string artistName;
     public string albumName;
-    public string genre;
-    public int year;
+    public string genres;
     public GameObject albumPrefab;
     public List<SongDescription> songs;
 }

@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601ecf9ccf8beb54bb7be04d31e10039, type: 3}
   m_Name: AlbumSO_Ngot
   m_EditorClassIdentifier: 
-  artistImage: {fileID: 0}
+  artistImage: {fileID: 21300000, guid: e38061032b824de4b9e477503dcb527e, type: 3}
   artistName: "Ng\u1ECDt"
   albumName: Gieo
-  genre: Indie Pop Alternative Rock
-  year: 2020
+  genres: Indie Pop, \nAlternative Rock
   albumPrefab: {fileID: 7100773709930266198, guid: f816ec677d15ee646bac2bf20b0da3cb,
     type: 3}
   songs:

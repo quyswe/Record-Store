@@ -5,8 +5,6 @@ using UnityEngine.XR.ARSubsystems;
 
 public class ARImageTracking : MonoBehaviour
 {
-    [SerializeField] private GameObject NgotPrefab;
-    [SerializeField] private GameObject SDDPB;
     ARTrackedImageManager trackedImageManager;
     private Dictionary<string, GameObject> spawnerAlbums = new Dictionary<string, GameObject>();
     void OnEnable() => trackedImageManager.trackablesChanged.AddListener(OnChanged);
@@ -32,6 +30,7 @@ public class ARImageTracking : MonoBehaviour
         {
             RemovePrefab(removed.Value);
         }
+
     }
     void AddPrefabForImage(ARTrackedImage trackedImage)
     {
@@ -48,10 +47,10 @@ public class ARImageTracking : MonoBehaviour
                 break;
 
         }
-
         if (prefabToSpawn != null)
         {
             GameObject spawned = Instantiate(prefabToSpawn, trackedImage.transform.position, trackedImage.transform.rotation);
+            spawned.GetComponent<CDAlbumManager>().aRTrackedImage = trackedImage;
             spawnerAlbums.Add(trackedImage.referenceImage.name, spawned);
         }
     }
