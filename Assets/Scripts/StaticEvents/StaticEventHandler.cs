@@ -66,9 +66,9 @@ public static class StaticEventHandler
         OnInstrumentSelected?.Invoke(instrument, isSelected);
     }
 
-    public static event Action<ARCloudAnchor> OnCurrentCloudAnchorChanged;
+    public static event Action<ARAnchor> OnCurrentCloudAnchorChanged;
 
-    public static void InvokeCurrentCloudAnchorChanged(ARCloudAnchor cloudAnchor)
+    public static void InvokeCurrentCloudAnchorChanged(ARAnchor cloudAnchor)
     {
         OnCurrentCloudAnchorChanged?.Invoke(cloudAnchor);
     }
@@ -80,9 +80,9 @@ public static class StaticEventHandler
         OnAttachObjectManagerChanged?.Invoke(attachObjectManager);
     }
 
-    public static event Action<ARCloudAnchor> OnCloudAnchorSelected;
+    public static event Action<ARAnchor> OnCloudAnchorSelected;
 
-    public static void InvokeCloudAnchorSelected(ARCloudAnchor cloudAnchor)
+    public static void InvokeCloudAnchorSelected(ARAnchor cloudAnchor)
     {
         OnCloudAnchorSelected?.Invoke(cloudAnchor);
     }

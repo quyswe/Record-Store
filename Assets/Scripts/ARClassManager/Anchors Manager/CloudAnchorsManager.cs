@@ -117,7 +117,6 @@ public class CloudAnchorsManager : MonoBehaviour
     AnchorDetails InitializeAnchorDetails(ARAnchor aRAnchor, HostCloudAnchorPromise hostCloudAnchorPromise)
     {
         AnchorDetails anchorDetails = new AnchorDetails();
-
         anchorDetails.anchorImage = anchorsManager.imageByte;
         hostNotifyText.text = $"📍 Đã tạo Cloud Anchor: {hostCloudAnchorPromise}";
         anchorDetails.anchorName = nameCurrentAnchor;
@@ -140,17 +139,18 @@ public class CloudAnchorsManager : MonoBehaviour
 
         while (resolveCloudAnchorPromise.State == PromiseState.Pending)
         {
-            resolveNotifyText.text = $"🔄 FIND + {Time.frameCount}";
             yield return null;
         }
         if (resolveCloudAnchorPromise.Result.CloudAnchorState == CloudAnchorState.Success)
         {
             ARCloudAnchor aRCloudAnchor = resolveCloudAnchorPromise.Result.Anchor;
-            aRCloudAnchor.gameObject.layer = LayerMask.NameToLayer("CloudAnchor");
+            hostNotifyText.text = aRCloudAnchor.ToString() + aRCloudAnchor.GetComponent<LocalAxis>().ToString();
             cloudAnchors.Add(cloudAnchorId, aRCloudAnchor);
             aRCloudAnchor.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
             cloudAnchorsSelectedList.Remove(cloudAnchorId);
-            resolveNotifyText.text = $"📍 Đã tải Cloud Anchor: {cloudAnchorId}";
+            resolveNotifyText.text = aRCloudAnchor.transform.position.ToString() + " " + aRCloudAnchor.GetComponent<ARAnchor>().transform.localPosition;
+            ARAnchor aRAnchor = aRCloudAnchor.GetComponent<ARAnchor>();
+
         }
         else
         {

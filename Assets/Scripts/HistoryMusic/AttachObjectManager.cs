@@ -8,11 +8,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.UI;
+using UnityEngine.XR.ARFoundation;
 
 public class AttachObjectManager : MonoBehaviour
 {
     public List<InstrumentDetails> selectedInstrumentList = new List<InstrumentDetails>();
-    private ARCloudAnchor currentCloudAnchor;
+    private ARAnchor currentCloudAnchor;
     public float maxDistance = 100f;
     public LayerMask hitLayers;
     private GameObject selectedGameObject;
@@ -43,7 +44,7 @@ public class AttachObjectManager : MonoBehaviour
         inputActions.Disable();
     }
 
-    private void StaticEventHandler_OnCloudAnchorSelected(ARCloudAnchor anchor)
+    private void StaticEventHandler_OnCloudAnchorSelected(ARAnchor anchor)
     {
         currentCloudAnchor = anchor;
         Debug.Log("Current Cloud Anchor: " + anchor.trackableId);
@@ -54,7 +55,7 @@ public class AttachObjectManager : MonoBehaviour
     {
         StaticEventHandler.InvokeAttachObjectManagerChanged(this);
     }
-    private void StaticEventHandler_OnCurrentCloudAnchorChanged(ARCloudAnchor anchor)
+    private void StaticEventHandler_OnCurrentCloudAnchorChanged(ARAnchor anchor)
     {
         currentCloudAnchor = anchor;
         notifyText.text = "Current Cloud Anchor: " + anchor.trackableId;

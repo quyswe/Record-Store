@@ -7,7 +7,7 @@ using UnityEngine.XR.ARFoundation;
 public class CloudAnchorDispatcher : MonoBehaviour
 {
     [SerializeField] private LayerMask cloudAnchorLayer; // Layer của cloud anchor
-    private ARCloudAnchor currentARCloudAnchor;
+    private ARAnchor currentARCloudAnchor;
     private InputSystem_Actions inputActions;
     [SerializeField] private TextMeshProUGUI TextMeshProUGUI;
     void Awake()
@@ -66,7 +66,7 @@ public class CloudAnchorDispatcher : MonoBehaviour
                 {
                     currentARCloudAnchor.GetComponent<SpriteRenderer>().color = Color.white;
                 }
-                currentARCloudAnchor = hit.collider.gameObject.GetComponent<ARCloudAnchor>();
+                currentARCloudAnchor = hit.collider.gameObject.GetComponent<ARAnchor>();
                 currentARCloudAnchor.GetComponent<SpriteRenderer>().color = Color.red;
                 StaticEventHandler.InvokeCloudAnchorSelected(currentARCloudAnchor);
                 TextMeshProUGUI.text = "Cloud Anchor Selected";
