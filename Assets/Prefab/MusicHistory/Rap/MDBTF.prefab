@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1092396397713590201, guid: 357943ccc96b1da4bae0691cbc76e2ea,
+        type: 3}
+      propertyPath: m_TrackScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2096028140251288382, guid: 357943ccc96b1da4bae0691cbc76e2ea,
         type: 3}
       propertyPath: m_Size.x
@@ -32,6 +37,11 @@ PrefabInstance:
     - target: {fileID: 4364301547697480968, guid: 357943ccc96b1da4bae0691cbc76e2ea,
         type: 3}
       propertyPath: m_Name
+      value: MDBTF
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975592961529557886, guid: 357943ccc96b1da4bae0691cbc76e2ea,
+        type: 3}
+      propertyPath: pictureName
       value: MDBTF
       objectReference: {fileID: 0}
     - target: {fileID: 8891917310971323715, guid: 357943ccc96b1da4bae0691cbc76e2ea,
@@ -102,28 +112,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4364301547697480968, guid: 357943ccc96b1da4bae0691cbc76e2ea,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -2660802812278718488}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 357943ccc96b1da4bae0691cbc76e2ea, type: 3}
---- !u!1 &1404669719991836212 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4364301547697480968, guid: 357943ccc96b1da4bae0691cbc76e2ea,
-    type: 3}
-  m_PrefabInstance: {fileID: 3454118568070642492}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-2660802812278718488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1404669719991836212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e350789d4b4297c409d1a6236ddb7610, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pictureName: MDBTF

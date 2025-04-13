@@ -36,7 +36,6 @@ public class ObjectParent : MonoBehaviour
         if (state == ApplicationState.ObjectManager)
         {
             ES3.Save(objParentName, transform);
-            Debug.Log($"Saved {objParentName} transform");
         }
     }
 }
