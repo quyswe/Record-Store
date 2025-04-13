@@ -11,7 +11,6 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
     private List<GameObject> rapList = new List<GameObject>();
     private List<GameObject> rockList = new List<GameObject>();
     private WallManager wallManager;
-    private Transform wallTransform;
     [SerializeField] private Transform instrumentOnWall;
     [SerializeField] private Transform popGenreOnWall;
     [SerializeField] private Transform rapGenreOnWall;
@@ -143,12 +142,9 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
         popGenreOnWall.gameObject.SetActive(false);
         rapGenreOnWall.gameObject.SetActive(false);
         rockGenreOnWall.gameObject.SetActive(false);
-        wall.transform.localPosition = new Vector3(0, 0, 0);
-        wall.transform.localRotation = Quaternion.Euler(0, 0, 0);
         wallManager = wall.GetComponent<WallManager>();
         wallManager.wallSO = GameResources.Instance.wall_HistoryMusic;
         GameResources.Instance.wallManager = wallManager;
-        wallTransform = wall.transform;
     }
 
     private void SetupInstrumentShowcaseWall(ARCloudAnchor cloudAnchor)
@@ -160,12 +156,9 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
         instrumentOnWall.SetParent(cloudAnchor.transform);
 #endif
         instrumentOnWall.gameObject.SetActive(false);
-        wall.transform.localPosition = new Vector3(0, 0, 0);
-        wall.transform.localRotation = Quaternion.Euler(0, 0, 0);
         wallManager = wall.GetComponent<WallManager>();
         wallManager.wallSO = GameResources.Instance.wallSO_Showcase;
         GameResources.Instance.wallManager = wallManager;
-        wallTransform = wall.transform;
     }
 
     public void InitializeObjects()
@@ -183,6 +176,8 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
     private void InitializeInstrumentOnWall()
     {
         instrumentOnWall.gameObject.SetActive(true);
+        Vector3 offset = new Vector3(0, 0, wallManager.transform.localPosition.z);
+        instrumentOnWall.localPosition = new Vector3(instrumentOnWall.localPosition.x, instrumentOnWall.localPosition.y, wallManager.transform.localPosition.z);
         foreach (var item in instrumentPrefabList)
         {
             GameObject obj = Instantiate(item, instrumentOnWall);
@@ -200,8 +195,9 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
         popGenreOnWall.gameObject.SetActive(true);
         rapGenreOnWall.gameObject.SetActive(true);
         rockGenreOnWall.gameObject.SetActive(true);
-
-
+        popGenreOnWall.localPosition = new Vector3(popGenreOnWall.localPosition.x, popGenreOnWall.localPosition.y, wallManager.transform.localPosition.z);
+        rapGenreOnWall.localPosition = new Vector3(rapGenreOnWall.localPosition.x, rapGenreOnWall.localPosition.y, wallManager.transform.localPosition.z);
+        rockGenreOnWall.localPosition = new Vector3(rockGenreOnWall.localPosition.x, rockGenreOnWall.localPosition.y, wallManager.transform.localPosition.z);
         Instantiate(GameResources.Instance.pop.logo, popGenreOnWall);
         foreach (var item in popPrefabList)
         {
@@ -209,9 +205,7 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
             popList.Add(obj);
             obj.GetComponent<XRGrabInteractable>().enabled = false;
         }
-
         //rap
-
         Instantiate(GameResources.Instance.rap.logo, rapGenreOnWall);
         foreach (var item in rapPrefabList)
         {
@@ -219,7 +213,6 @@ public class ObjectSpawnerAtAnchors : MonoBehaviour
             rapList.Add(obj);
             obj.GetComponent<XRGrabInteractable>().enabled = false;
         }
-
         //rock
         Instantiate(GameResources.Instance.rock.logo, rockGenreOnWall);
         foreach (var item in rockPrefabList)

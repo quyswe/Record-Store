@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -23,6 +24,7 @@ public class PictureFrame : MonoBehaviour
         {
             StaticEventHandler.InvokeXRGrabInteractableSelected(gameObject);
         });
+        GameManager.Instance.OnApplicationStateChanged += OnApplicationStateChanged;
     }
     private void OnDestroy()
     {
@@ -30,5 +32,15 @@ public class PictureFrame : MonoBehaviour
         {
             StaticEventHandler.InvokeXRGrabInteractableSelected(gameObject);
         });
+        GameManager.Instance.OnApplicationStateChanged -= OnApplicationStateChanged;
+    }
+
+    private void OnApplicationStateChanged(ApplicationState state)
+    {
+        if (state == ApplicationState.LoadMapMode)
+        {
+            grabInteractable.enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
+        }
     }
 }

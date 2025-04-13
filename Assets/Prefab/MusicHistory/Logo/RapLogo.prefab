@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 710055179006322457}
   - component: {fileID: 4878836974333202736}
   - component: {fileID: -7534272550679204192}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: RapLogo
   m_TagString: Rap
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9198575238293008141}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -110,8 +110,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1024, y: 0.1024, z: 0.0243291}
-  m_Center: {x: 0, y: 0, z: 0.3106139}
+  m_Size: {x: 0.1024, y: 0.1024, z: 0.035170283}
+  m_Center: {x: 0, y: 0, z: -0.0020483322}
 --- !u!54 &710055179006322457
 Rigidbody:
   m_ObjectHideFlags: 0
