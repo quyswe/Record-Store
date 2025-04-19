@@ -2,9 +2,10 @@ using System.ComponentModel.Design;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class InstrumentUI : MonoBehaviour
+public class InstrumentUI : MonoBehaviour, IPointerClickHandler
 {
     private Button[] buttons;
     [SerializeField] private TextMeshProUGUI instrumentName;
@@ -33,6 +34,7 @@ public class InstrumentUI : MonoBehaviour
     }
     private void Start()
     {
+
         instrumentUICanvas.worldCamera = Camera.main;
         buttons[0].onClick.AddListener(ToggleVideoPanel);
         buttons[1].onClick.AddListener(ToggleInformationText);
@@ -59,5 +61,10 @@ public class InstrumentUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         ToggleVideoPanel();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        StaticEventHandler.InvokeUIInteractableSelected(gameObject);
     }
 }

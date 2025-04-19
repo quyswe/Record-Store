@@ -36,29 +36,29 @@ public class MusicHistoryUIManager : MonoBehaviour
         int musicHistoryLayerMask = 1 << LayerMask.NameToLayer("MusicHistory");
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, musicHistoryLayerMask))
         {
-            offset = (hit.point - Camera.main.transform.position).normalized;
+            offset = (Camera.main.transform.position - hit.point).normalized;
             if (hit.transform.CompareTag("Pop"))
             {
                 musicHistoryUI.gameObject.SetActive(true);
-                musicHistoryUI.gameObject.transform.position = hit.transform.position - offset;
+                musicHistoryUI.gameObject.transform.position = hit.transform.position + offset;
                 musicHistoryUI.PlayVideo(GameResources.Instance.pop.videoClip);
             }
             else if (hit.transform.CompareTag("Rap"))
             {
                 musicHistoryUI.gameObject.SetActive(true);
-                musicHistoryUI.gameObject.transform.position = hit.transform.position - offset;
+                musicHistoryUI.gameObject.transform.position = hit.transform.position + offset;
                 musicHistoryUI.PlayVideo(GameResources.Instance.rap.videoClip);
             }
 
             else if (hit.transform.CompareTag("Rock"))
             {
                 musicHistoryUI.gameObject.SetActive(true);
-                musicHistoryUI.gameObject.transform.position = hit.transform.position - offset;
+                musicHistoryUI.gameObject.transform.position = hit.transform.position + offset;
                 musicHistoryUI.PlayVideo(GameResources.Instance.rock.videoClip);
             }
 
         }
     }
 
-   
+
 }

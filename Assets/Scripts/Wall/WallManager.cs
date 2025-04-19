@@ -5,14 +5,14 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class WallManager : MonoBehaviour
 {
-    private Rigidbody wallRigidbody;
     private XRGrabInteractable wallInteractable;
     private ObjectSaver objectSaver;
+    private Collider wallCollider;
     private void Awake()
     {
-        wallRigidbody = GetComponent<Rigidbody>();
         wallInteractable = GetComponent<XRGrabInteractable>();
         objectSaver = GetComponent<ObjectSaver>();
+        wallCollider = GetComponent<Collider>();
     }
     private void Start()
     {
@@ -37,11 +37,16 @@ public class WallManager : MonoBehaviour
     {
         if (state == ApplicationState.WallManager)
         {
-            wallRigidbody.constraints = RigidbodyConstraints.None;
+            wallInteractable.enabled = true;
+            wallCollider.enabled = true;
+        }
+        else
+        {
+            wallInteractable.enabled = false;
+            wallCollider.enabled = false;
         }
         if (state == ApplicationState.ObjectManager)
         {
-            wallRigidbody.constraints = RigidbodyConstraints.FreezeAll;
             objectSaver.SaveTransform(gameObject.name);
         }
 

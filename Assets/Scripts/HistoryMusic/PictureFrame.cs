@@ -13,8 +13,6 @@ public class PictureFrame : MonoBehaviour
         objectSaver = GetComponent<ObjectSaver>();
     }
 
-
-
     private void Start()
     {
         grabInteractable.selectEntered.AddListener((temp) =>
@@ -35,10 +33,18 @@ public class PictureFrame : MonoBehaviour
 
     private void OnApplicationStateChanged(ApplicationState state)
     {
-        if (state == ApplicationState.LoadMapMode)
+        if (state == ApplicationState.ObjectManager)
         {
-            grabInteractable.enabled = false;
-            GetComponentInChildren<Collider>().enabled = false;
+            ToggleInteractableItem(gameObject, true);
         }
+        else
+        {
+            ToggleInteractableItem(gameObject, false);
+        }
+    }
+    void ToggleInteractableItem(GameObject item, bool isEnabled)
+    {
+        item.GetComponent<XRGrabInteractable>().enabled = isEnabled;
+        item.GetComponentInChildren<Collider>().enabled = isEnabled;
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class InstrumentsManager : MonoBehaviour
+public class InstrumentsUIManager : MonoBehaviour
 {
     private InputAction touchAction;
     [SerializeField] private GameObject instrumentUIPrefab;
@@ -38,10 +38,10 @@ public class InstrumentsManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, instrumentLayerMask))
         {
-            offset = (hit.point - Camera.main.transform.position).normalized;
+            offset = (Camera.main.transform.position - hit.point).normalized;
             var instrument = hit.collider.gameObject.GetComponent<Instrument>();
             instrumentSO = instrument.instrumentSO;
-            instrumentUI.SetData(instrumentSO, hit.transform.position - offset);
+            instrumentUI.SetData(instrumentSO, hit.transform.position + offset);
         }
     }
 

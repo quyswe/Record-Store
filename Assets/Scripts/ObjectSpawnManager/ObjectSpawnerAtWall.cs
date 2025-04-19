@@ -6,42 +6,22 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class ObjectSpawnerAtWall : MonoBehaviour
 {
-
+    [SerializeField] Transform[] objectTranformList;
+    private XRGrabInteractable wallXRGrabInteractable;
     private void Awake()
     {
-        StaticEventHandler.OnInstantiateAtAnchor += OnInstantiateAtAnchor;
         GameResources.Instance.objectSpawnerAtAnchors = this;
     }
     private void Start()
     {
-        GameManager.Instance.OnApplicationStateChanged += OnApplicationStateChanged;
+        StaticEventHandler.OnInstantiateAtWall += OnInstantiateAtAnchor;
     }
-
-
 
     private void OnDestroy()
     {
-        StaticEventHandler.OnInstantiateAtAnchor -= OnInstantiateAtAnchor;
-        GameManager.Instance.OnApplicationStateChanged -= OnApplicationStateChanged;
+        StaticEventHandler.OnInstantiateAtWall -= OnInstantiateAtAnchor;
     }
 
-    private void OnApplicationStateChanged(ApplicationState state)
-    {
-        XRGrabInteractable xRGrabInteractable = GameResources.Instance.currentwallManager.GetComponent<XRGrabInteractable>();
-
-        if (state == ApplicationState.WallManager)
-        {
-            xRGrabInteractable.enabled = true;
-            GetComponentInChildren<Collider>().enabled = true;
-        }
-        else
-        {
-            xRGrabInteractable.enabled = false;
-            GetComponentInChildren<Collider>().enabled = false;
-        }
-
-
-    }
 
     private void OnInstantiateAtAnchor(ARCloudAnchor aRAnchor, AnchorType type)
     {
@@ -61,17 +41,22 @@ public class ObjectSpawnerAtWall : MonoBehaviour
         }
 
     }
-    void CreateWall(ARCloudAnchor arRchor)
+    void CreateWall(ARCloudAnchor arAnchor)
     {
         GameObject wall = Instantiate(GameResources.Instance.wallPrefab, transform);
+        wallXRGrabInteractable = wall.GetComponent<XRGrabInteractable>();
         GameResources.Instance.currentwallManager = wall.GetComponent<WallManager>();
-#if PLATFORM_ANDROID && !UNITY_EDITOR
-        wall.transform.SetParent(arRchor.transform);
+#if PLATFORM_ANDROID 
+        if (arAnchor == false) return;
+        wall.transform.SetParent(arAnchor.transform);
         wall.transform.localPosition = new Vector3(0, 0, 0);
+        foreach (var item in objectTranformList)
+        {
+            item.SetParent(arAnchor.transform);
+            item.localPosition = new Vector3(0, 0, 0);
+        }
 #endif
     }
-
-
 
     private void CreateVinylShowCase(ARCloudAnchor aRCloudAnchor)
     {
