@@ -23,10 +23,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         switch (applicationState)
         {
             case ApplicationState.Start:
+                SceneManager.LoadScene("RecordStoreInit");
                 break;
             case ApplicationState.CreateMapMode:
-                SceneManager.LoadScene("InstructionScene", LoadSceneMode.Additive);
-                SceneManager.LoadScene("NavigationScene", LoadSceneMode.Additive);
+                //SceneManager.LoadScene("InstructionScene", LoadSceneMode.Additive);
+                //SceneManager.LoadScene("NavigationScene", LoadSceneMode.Additive);
                 break;
             case ApplicationState.Anchor:
                 break;

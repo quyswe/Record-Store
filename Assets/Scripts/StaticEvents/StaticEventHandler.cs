@@ -2,7 +2,6 @@ using Google.XR.ARCoreExtensions;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.XR.ARFoundation;
 
 public static class StaticEventHandler
@@ -13,7 +12,12 @@ public static class StaticEventHandler
     {
         OnXRGrabInteractableSelected?.Invoke(interactable);
     }
+    public static event Action<GameObject> OnUIInteractableSelected;
 
+    public static void InvokeUIInteractableSelected(GameObject interactable)
+    {
+        OnUIInteractableSelected?.Invoke(interactable);
+    }
     public static event Action<AlbumSO, int> OnSongChanged;
 
     public static void InvokeSongChanged(AlbumSO album, int index)
@@ -39,38 +43,12 @@ public static class StaticEventHandler
         OnSelectCloudAnchor?.Invoke(isSelect, cloudAnchorId);
     }
 
-    public static event Action<ARAnchor> OnCurrentAnchorChanged;
-    public static void InvokeCurrentAnchorChanged(ARAnchor cloudAnchor)
+    public static event Action<ARCloudAnchor, AnchorType> OnInstantiateAtWall;
+
+    public static void InvokeInstantiateAtWall(ARCloudAnchor aRAnchor, AnchorType anchorType)
     {
-        OnCurrentAnchorChanged?.Invoke(cloudAnchor);
+        OnInstantiateAtWall?.Invoke(aRAnchor, anchorType);
     }
-    public static event Action<ARAnchor> OnAnchorSelected;
-
-    public static void InvokeAnchorSelected(ARAnchor cloudAnchor)
-    {
-        OnAnchorSelected?.Invoke(cloudAnchor);
-    }
-
-    public static event Action<int> OnMainDropdownChanged;
-
-    public static void InvokeMainDropdownChanged(int index)
-    {
-        OnMainDropdownChanged?.Invoke(index);
-    }
-
-    public static event Action<InstrumentShowcase> OnInstrumentShowcaseChanged;
-    public static void InvokeInstrumentShowcaseChanged(InstrumentShowcase instrumentShowcase)
-    {
-        OnInstrumentShowcaseChanged?.Invoke(instrumentShowcase);
-    }
-
-    public static event Action<ARCloudAnchor, AnchorType> OnInstantiateAtAnchor;
-
-    public static void InvokeInstantiateAtAnchor(ARCloudAnchor aRAnchor, AnchorType anchorType)
-    {
-        OnInstantiateAtAnchor?.Invoke(aRAnchor, anchorType);
-    }
-
     public static event Action<Anchor, bool> OnAnchorCreated;
 
     public static void InvokeAnchorChanged(Anchor anchor, bool isSelect)

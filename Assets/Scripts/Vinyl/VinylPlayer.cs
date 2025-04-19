@@ -26,6 +26,7 @@ public class VinylPlayer : MonoBehaviour
     bool isOpen = false;
     bool isPicked = false;
     public bool isSpinning = false;
+    private string BohemianRhapsody = "Bohemian Rhapsody";
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -141,7 +142,7 @@ public class VinylPlayer : MonoBehaviour
     private void PlayCurrentTrack(VinylDiscSO vinylDiscSO)
     {
         audioSource.clip = vinylDiscSO.songs[currentTrack];
-        if (vinylDiscSO.discName == "Bohemian Rhapsody")
+        if (vinylDiscSO.discName == BohemianRhapsody)
         {
             StaticEventHandler.InvokeMovePortal();
         }

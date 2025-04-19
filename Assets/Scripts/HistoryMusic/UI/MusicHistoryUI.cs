@@ -5,7 +5,7 @@ using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class MusicHistoryUI : MonoBehaviour
+public class MusicHistoryUI : MonoBehaviour, IPointerClickHandler
 {
     private VideoPlayer videoPlayer;
     private Slider slider;
@@ -58,4 +58,8 @@ public class MusicHistoryUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        StaticEventHandler.InvokeUIInteractableSelected(gameObject);
+    }
 }

@@ -10,6 +10,7 @@ public class ObjectSaver : MonoBehaviour
         arTransform.rotation = transform.localRotation;
         arTransform.scale = transform.localScale;
         ES3.Save(key, arTransform);
+
     }
     public async void LoadTransform(string key)
     {

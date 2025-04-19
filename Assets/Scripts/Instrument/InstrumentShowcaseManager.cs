@@ -13,42 +13,9 @@ public class InstrumentShowcaseManager : MonoBehaviour, IObjectDisplayer
     {
         LoadPrefabListFromResource();
         LoadObjectFromPrefab();
+        GameResources.Instance.instrumentShowcaseManager = this;
     }
-    private void OnApplicationStateChanged(ApplicationState state)
-    {
-        if (state == ApplicationState.ObjectParent)
-        {
-            ToggleInteractableObjectParent(true);
-        }
-        else
-        {
-            ToggleInteractableObjectParent(false);
-        }
-        if (state == ApplicationState.ObjectManager)
-        {
-            foreach (var item in instrumentList)
-            {
-                ToggleInteractableItem(item, true);
-            }
-        }
-        else
-        {
-            foreach (var item in instrumentList)
-            {
-                ToggleInteractableItem(item, false);
-            }
-        }
-    }
-    void ToggleInteractableObjectParent(bool isEnable)
-    {
-        instrumentOnWall.GetComponent<XRGrabInteractable>().enabled = isEnable;
-        instrumentOnWall.GetComponent<Collider>().enabled = isEnable;
-    }
-    void ToggleInteractableItem(GameObject item, bool isEnabled)
-    {
-        item.GetComponent<XRGrabInteractable>().enabled = isEnabled;
-        item.GetComponentInChildren<Collider>().enabled = isEnabled;
-    }
+
     private void LoadPrefabListFromResource()
     {
         foreach (var instrumentShowcaseSO in GameResources.Instance.instrumentShowCase.instrumentShowcaseList)
@@ -66,7 +33,7 @@ public class InstrumentShowcaseManager : MonoBehaviour, IObjectDisplayer
         }
 
     }
-    public void ShowObjects()
+    public async void ShowObjects()
     {
         GameManager.Instance.ChangeApplicationState(ApplicationState.ObjectParent);
         if (isCreated) return;
@@ -75,6 +42,7 @@ public class InstrumentShowcaseManager : MonoBehaviour, IObjectDisplayer
             item.gameObject.SetActive(true);
             item.GetComponent<XRGrabInteractable>().enabled = false;
             item.GetComponentInChildren<Collider>().enabled = false;
+            await Awaitable.NextFrameAsync();
         }
         isCreated = true;
     }

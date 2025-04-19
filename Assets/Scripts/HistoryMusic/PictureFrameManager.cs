@@ -9,75 +9,20 @@ public class PictureFrameManager : MonoBehaviour, IObjectDisplayer
     private List<GameObject> rapList = new List<GameObject>();
     private List<GameObject> rockList = new List<GameObject>();
 
-    [SerializeField] private Transform popGenreOnWall;
-    [SerializeField] private Transform rapGenreOnWall;
-    [SerializeField] private Transform rockGenreOnWall;
+    public Transform popGenreOnWall;
+    public Transform rapGenreOnWall;
+    public Transform rockGenreOnWall;
     private List<GameObject> popPrefabList = new List<GameObject>();
     private List<GameObject> rapPrefabList = new List<GameObject>();
     private List<GameObject> rockPrefabList = new List<GameObject>();
     bool isCreated = false;
-
     private void Start()
     {
         LoadPrefabListFromRessource();
         LoadObjectFromPrefab();
-        GameManager.Instance.OnApplicationStateChanged += OnApplicationStateChanged;
-    }
-    private void OnDestroy()
-    {
-        GameManager.Instance.OnApplicationStateChanged -= OnApplicationStateChanged;
+        GameResources.Instance.pictureFrameManager = this;
     }
 
-    private void OnApplicationStateChanged(ApplicationState state)
-    {
-        if (state == ApplicationState.ObjectParent)
-        {
-            ToggleInteractableObjectParent(true);
-        }
-        else
-        {
-            ToggleInteractableObjectParent(false);
-        }
-        if (state == ApplicationState.ObjectManager)
-        {
-            foreach (var item in popList)
-            {
-                ToggleInteractableItem(item, true);
-            }
-            foreach (var item in rapList)
-            {
-                ToggleInteractableItem(item, true);
-            }
-            foreach (var item in rockList)
-            {
-                ToggleInteractableItem(item, true);
-            }
-        }
-        else
-        {
-            foreach (var item in popList)
-            {
-                ToggleInteractableItem(item, false);
-            }
-            foreach (var item in rapList)
-            {
-                ToggleInteractableItem(item, false);
-            }
-            foreach (var item in rockList)
-            {
-                ToggleInteractableItem(item, false);
-            }
-        }
-    }
-    void ToggleInteractableObjectParent(bool isEnable)
-    {
-        popGenreOnWall.GetComponent<XRGrabInteractable>().enabled = isEnable;
-        popGenreOnWall.GetComponent<Collider>().enabled = isEnable;
-        rapGenreOnWall.GetComponent<XRGrabInteractable>().enabled = isEnable;
-        rapGenreOnWall.GetComponent<Collider>().enabled = isEnable;
-        rockGenreOnWall.GetComponent<XRGrabInteractable>().enabled = isEnable;
-        rockGenreOnWall.GetComponent<Collider>().enabled = isEnable;
-    }
     void ToggleInteractableItem(GameObject item, bool isEnabled)
     {
         item.GetComponent<XRGrabInteractable>().enabled = isEnabled;
@@ -100,7 +45,6 @@ public class PictureFrameManager : MonoBehaviour, IObjectDisplayer
     }
     private void LoadObjectFromPrefab()
     {
-
         foreach (var item in popPrefabList)
         {
             GameObject obj = Instantiate(item, popGenreOnWall);
@@ -120,7 +64,7 @@ public class PictureFrameManager : MonoBehaviour, IObjectDisplayer
             obj.gameObject.SetActive(false);
         }
     }
-    public void ShowObjects()
+    public async void ShowObjects()
     {
         GameManager.Instance.ChangeApplicationState(ApplicationState.ObjectParent);
         if (isCreated) return;
@@ -129,18 +73,21 @@ public class PictureFrameManager : MonoBehaviour, IObjectDisplayer
             item.gameObject.SetActive(true);
             item.GetComponent<XRGrabInteractable>().enabled = false;
             item.GetComponentInChildren<Collider>().enabled = false;
+            await Awaitable.NextFrameAsync();
         }
         foreach (var item in rapList)
         {
             item.gameObject.SetActive(true);
             item.GetComponent<XRGrabInteractable>().enabled = false;
             item.GetComponentInChildren<Collider>().enabled = false;
+            await Awaitable.NextFrameAsync();
         }
         foreach (var item in rockList)
         {
             item.gameObject.SetActive(true);
             item.GetComponent<XRGrabInteractable>().enabled = false;
             item.GetComponentInChildren<Collider>().enabled = false;
+            await Awaitable.NextFrameAsync();
         }
         isCreated = true;
     }

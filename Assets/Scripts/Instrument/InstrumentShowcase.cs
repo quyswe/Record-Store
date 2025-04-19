@@ -35,16 +35,24 @@ public class InstrumentShowcase : MonoBehaviour
 
     private void OnApplicationStateChanged(ApplicationState state)
     {
-        if (state == ApplicationState.LoadMapMode)
+        if (state == ApplicationState.ObjectManager)
         {
-            grabInteractable.enabled = false;
-            GetComponentInChildren<Collider>().enabled = false;
+            ToggleInteractableItem(gameObject, true);
         }
+        else
+        {
+            ToggleInteractableItem(gameObject, false);
+            StaticEventHandler.InvokeXRGrabInteractableSelected(null);
+        }
+    }
+    void ToggleInteractableItem(GameObject item, bool isEnabled)
+    {
+        item.GetComponent<XRGrabInteractable>().enabled = isEnabled;
+        item.GetComponentInChildren<Collider>().enabled = isEnabled;
     }
     private void Select(SelectEnterEventArgs selectEnterEventArgs)
     {
         localAxis.enabled = true;
-        StaticEventHandler.InvokeInstrumentShowcaseChanged(this);
         StaticEventHandler.InvokeXRGrabInteractableSelected(gameObject);
     }
     private void Deselect(SelectExitEventArgs arg0)

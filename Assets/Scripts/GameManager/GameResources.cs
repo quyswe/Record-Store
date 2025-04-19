@@ -58,7 +58,7 @@ public class GameResources : MonoBehaviour
     [HideInInspector] public TextMeshProUGUI anchorSceneText;
     [HideInInspector] public TextMeshProUGUI cloudAnchorSceneText;
 
-    [HideInInspector] public SceneNavigationBar sceneNavigationBar;
+    [HideInInspector] public LoadMapSceneNavigationBar sceneNavigationBar;
 
     [HideInInspector] public WallManager currentwallManager;
     [HideInInspector] public GameObject contentCloudAnchor;
@@ -85,6 +85,7 @@ public class GameResources : MonoBehaviour
     public GameObject wallPrefab;
 
     public InputActionReference touchRef;
+    public InputActionReference pinchGapDeltaRef;
 #if UNITY_EDITOR
     private void OnValidate()
     {

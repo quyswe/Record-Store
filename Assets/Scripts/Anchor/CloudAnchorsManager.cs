@@ -167,7 +167,7 @@ public class CloudAnchorsManager : MonoBehaviour
 #if UNITY_EDITOR
         yield return null;
         GameResources.Instance.contentCloudAnchor.SetActive(!GameResources.Instance.contentCloudAnchor.activeSelf);
-        StaticEventHandler.InvokeInstantiateAtAnchor(null, currentAnchorType);
+        StaticEventHandler.InvokeInstantiateAtWall(null, currentAnchorType);
 #endif
     }
     void QueryARCloudAnchor(ARCloudAnchor aRAnchor, string cloudAnchorId)
@@ -177,7 +177,7 @@ public class CloudAnchorsManager : MonoBehaviour
             AnchorDetails anchorDetails = cloudAnchorDetails[cloudAnchorId];
             if (anchorDetails != null)
             {
-                StaticEventHandler.InvokeInstantiateAtAnchor(aRAnchor, anchorDetails.anchorType);
+                StaticEventHandler.InvokeInstantiateAtWall(aRAnchor, anchorDetails.anchorType);
             }
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class TransformObjectsManager : MonoBehaviour
 {
     [Header("Input Action")]
-    public InputActionReference pinchGapDeltaRef;
     [Header("Scale Settings")]
     public float scaleSensitivity = 0.01f;
     [Header("Scale Limits")]
@@ -16,8 +15,9 @@ public class TransformObjectsManager : MonoBehaviour
 
     private void Awake()
     {
-        StaticEventHandler.OnXRGrabInteractableSelected += OnXRGrabInteractableSelected;
-        pinchAction = pinchGapDeltaRef.action;
+        StaticEventHandler.OnXRGrabInteractableSelected += OnScaleObjectInteractableSelected;
+        StaticEventHandler.OnUIInteractableSelected += OnScaleObjectInteractableSelected;
+        pinchAction = GameResources.Instance.pinchGapDeltaRef.action;
         pinchAction.Enable();
         pinchAction.performed += OnPinchPerformed;
     }
@@ -25,23 +25,24 @@ public class TransformObjectsManager : MonoBehaviour
     {
         GameResources.Instance.transformObjectsManager = this;
     }
-    private void OnXRGrabInteractableSelected(GameObject obj)
+    private void OnDestroy()
+    {
+        StaticEventHandler.OnXRGrabInteractableSelected -= OnScaleObjectInteractableSelected;
+        StaticEventHandler.OnUIInteractableSelected -= OnScaleObjectInteractableSelected;
+        pinchAction.performed -= OnPinchPerformed;
+        pinchAction.Disable();
+    }
+    private void OnScaleObjectInteractableSelected(GameObject obj)
     {
         if (obj == null)
         {
             gameObjectSelected = null;
             return;
         }
-        XRGrabInteractable interactable = obj.GetComponent<XRGrabInteractable>();
         gameObjectSelected = obj;
     }
 
-    private void OnDestroy()
-    {
-        StaticEventHandler.OnXRGrabInteractableSelected -= OnXRGrabInteractableSelected;
-        pinchAction.performed -= OnPinchPerformed;
-        pinchAction.Disable();
-    }
+
     private void OnPinchPerformed(InputAction.CallbackContext context)
     {
         if (gameObjectSelected == null) return;
