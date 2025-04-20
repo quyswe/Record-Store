@@ -917,8 +917,8 @@ MonoBehaviour:
     Placing Anchors:\n\nOnly place anchors when the AR environment quality is labeled
     as: Sufficient, Good, or Excellent.\n\nThe app will display the current environment
     quality \u2013 if it's low (e.g., Insufficient), move the device slowly and scan
-    more of the environment to improve tracking.\n\n\u2601CLOUD ANCHOR PAGE\nPurpose:
-    Manage and process operations related to Cloud Anchors.\n\n\U0001F539 Main Features:\n\nUpload
+    more of the environment to improve tracking.\n\nCLOUD ANCHOR PAGE\nPurpose: Manage
+    and process operations related to Cloud Anchors.\n\n Main Features:\n\nUpload
     anchors to the cloud.\n\nView a list of previously created Cloud Anchor IDs.\n\nResolve
     Cloud Anchors to reload previously set up environments.\n\n WALL PAGE\nPurpose:
     Customize walls and object clusters attached to them.\n\nFunctions:\n\nAdjust
