@@ -1,14 +1,16 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UploadMapButton : MonoBehaviour
 {
     private Button updateButton;
-
+    private TextMeshProUGUI updateText;
     private void Awake()
     {
         updateButton = GetComponent<Button>();
+        updateText = GetComponentInChildren<TextMeshProUGUI>();
         updateButton.onClick.AddListener(OnUpdateButtonClick);
     }
     private void OnDestroy()
@@ -21,11 +23,11 @@ public class UploadMapButton : MonoBehaviour
          {
              if (task.IsFaulted)
              {
-                 Debug.LogError("Upload failed: " + task.Exception);
+                 updateText.text = "Upload failed. Please try again.";
              }
              else
              {
-                 Debug.Log("Upload completed successfully.");
+                 updateText.text = "Upload completed successfully.";
              }
          });
     }

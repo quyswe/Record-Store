@@ -145,26 +145,41 @@ public class CloudAnchorsManager : MonoBehaviour
     private IEnumerator ResolveCloudAnchorRoutine(string cloudAnchorId)
     {
 #if PLATFORM_ANDROID && !UNITY_EDITOR
-        ResolveCloudAnchorPromise resolveCloudAnchorPromise = arAnchorsManager.ResolveCloudAnchorAsync(cloudAnchorId);
-        GameResources.Instance.contentCloudAnchor.SetActive(!GameResources.Instance.contentCloudAnchor.activeSelf);
+    var resolveCloudAnchorPromise = arAnchorsManager.ResolveCloudAnchorAsync(cloudAnchorId);
+    
+    if (!GameResources.Instance.contentCloudAnchor.activeSelf)
+        GameResources.Instance.contentCloudAnchor.SetActive(true);
 
-        while (resolveCloudAnchorPromise.State == PromiseState.Pending)
-        {
-            GameResources.Instance.cloudAnchorSceneText.text = $"Loading Cloud Anchor: {cloudAnchorId} + {Time.frameCount}";
-            yield return null;
-        }
-        if (resolveCloudAnchorPromise.Result.CloudAnchorState == CloudAnchorState.Success)
-        {
-            ARCloudAnchor aRCloudAnchor = resolveCloudAnchorPromise.Result.Anchor;
-            QueryARCloudAnchor(aRCloudAnchor, cloudAnchorId);
-            cloudAnchorsSelectedList.Remove(cloudAnchorId);
-            GameResources.Instance.resolveCloudAnchorIdList.Add(cloudAnchorId);
-            GameResources.Instance.cloudAnchorSceneText.text = $"Position: {aRCloudAnchor.pose.position}, Rotation: {aRCloudAnchor.pose.rotation}";
-        }
-        else
-        {
-            GameResources.Instance.cloudAnchorSceneText.text = $"Unable to load Cloud Anchor: {cloudAnchorId}.{resolveCloudAnchorPromise.Result.CloudAnchorState}";
-        }
+    float timeout = 10f;
+    float timer = 0f;
+
+    while (resolveCloudAnchorPromise.State == PromiseState.Pending && timer < timeout)
+    {
+        timer += Time.deltaTime;
+        yield return null;
+    }
+
+    if (resolveCloudAnchorPromise.State == PromiseState.Pending)
+    {
+        Debug.LogWarning("Cloud anchor resolve timed out.");
+        yield break;
+    }
+
+    if (resolveCloudAnchorPromise.Result != null && resolveCloudAnchorPromise.Result.CloudAnchorState == CloudAnchorState.Success)
+    {
+        var cloudAnchor = resolveCloudAnchorPromise.Result.Anchor;
+        QueryARCloudAnchor(cloudAnchor, cloudAnchorId);
+
+        cloudAnchorsSelectedList.Remove(cloudAnchorId);
+        GameResources.Instance.resolveCloudAnchorIdList.Add(cloudAnchorId);
+
+        Debug.Log($"Successfully resolved cloud anchor: {cloudAnchorId}, Position: {cloudAnchor.pose.position}");
+    }
+    else
+    {
+        var state = resolveCloudAnchorPromise.Result?.CloudAnchorState.ToString() ?? "Unknown";
+        Debug.LogWarning($"Unable to resolve cloud anchor: {cloudAnchorId}. State: {state}");
+    }
 #endif
 
 #if UNITY_EDITOR

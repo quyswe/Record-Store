@@ -1,5 +1,4 @@
-﻿using Google.XR.ARCoreExtensions;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
