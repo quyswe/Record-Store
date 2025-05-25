@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -15,8 +14,7 @@ public class InstrumentShowcase : MonoBehaviour, INameable
     private void Awake()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
-        //grabInteractable.selectEntered.AddListener(Select);
-        //grabInteractable.selectExited.AddListener(Deselect);
+        grabInteractable.selectEntered.AddListener(Select);
     }
 
     private void Start()
@@ -29,7 +27,7 @@ public class InstrumentShowcase : MonoBehaviour, INameable
         ApplicationManager.Instance.OnApplicationStateChanged -= OnApplicationStateChanged;
         if (grabInteractable != null)
         {
-            //  grabInteractable.selectEntered.RemoveListener(Select);
+            grabInteractable.selectEntered.RemoveListener(Select);
         }
     }
 
@@ -49,17 +47,12 @@ public class InstrumentShowcase : MonoBehaviour, INameable
     void ToggleInteractableItem(GameObject item, bool isEnabled)
     {
         item.GetComponent<XRGrabInteractable>().enabled = isEnabled;
-        item.GetComponentInChildren<Collider>().enabled = isEnabled;
     }
-    //private void Select(SelectEnterEventArgs selectEnterEventArgs)
-    //{
-    //    localAxis.enabled = true;
-    //    StaticEventHandler.InvokeXRGrabInteractableSelected(gameObject);
-    //}
-    //private void Deselect(SelectExitEventArgs arg0)
-    //{
-    //    localAxis.enabled = false;
-    //}
+    private void Select(SelectEnterEventArgs selectEnterEventArgs)
+    {
+        StaticEventHandler.InvokeXRGrabInteractableSelected(gameObject);
+    }
+
 
     public string GetKey()
     {
