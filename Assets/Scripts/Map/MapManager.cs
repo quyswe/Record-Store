@@ -15,7 +15,7 @@ public class MapManager : MonoBehaviour
 
     ES3Settings settings;
 
-    Dictionary<string, AnchorDetails> anchorDetails = new Dictionary<string, AnchorDetails>();
+    Dictionary<string, AnchorDetails> anchorDetailsDict = new Dictionary<string, AnchorDetails>();
 
     string key = "cloudAnchorDetails";
     const string currentMap = "Current Map: ";
@@ -34,10 +34,17 @@ public class MapManager : MonoBehaviour
             GameObject item = Instantiate(fileItemPrefab, contentPanel);
             string fileName = Path.GetFileName(filePath);
             settings = new ES3Settings(fileName);
-            ES3.LoadInto(key, anchorDetails, settings);
-            Sprite sprite = HelperUtilities.SetSprite(anchorDetails[key].anchorImage);
+            anchorDetailsDict.Clear();
+            ES3.LoadInto(key, anchorDetailsDict, settings);
+            anchorDetailsDict.Clear();
+            AnchorDetails firstAnchorDetail = null;
+            if (anchorDetailsDict.Count > 0)
+            {
+                firstAnchorDetail = new List<AnchorDetails>(anchorDetailsDict.Values)[0];
+            }
+            Sprite sprite = HelperUtilities.SetSprite(firstAnchorDetail.anchorImage);
             item.GetComponentInChildren<TextMeshProUGUI>().text = fileName;
-            item.GetComponent<Image>().sprite = sprite;
+            //   item.GetComponent<Image>().sprite = sprite;
             Button btn = item.GetComponent<Button>();
             if (btn != null)
             {
