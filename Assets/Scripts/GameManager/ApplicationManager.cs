@@ -27,14 +27,11 @@ public class ApplicationManager : SingletonMonobehaviour<ApplicationManager>
         {
             case ApplicationState.Start:
                 break;
-            case ApplicationState.CreateMapMode:
+            case ApplicationState.Admin:
                 SceneManager.LoadScene("InstructionScene", LoadSceneMode.Additive);
                 SceneManager.LoadScene("CreateMapNavigationScene", LoadSceneMode.Additive);
                 break;
-            case ApplicationState.LoadingMapMode:
-                SceneManager.LoadScene("ListMapScene", LoadSceneMode.Additive);
-                SceneManager.LoadScene("LoadMapNavigation", LoadSceneMode.Additive);
-                break;
+
             case ApplicationState.Anchor:
                 break;
             case ApplicationState.CloudAnchorInCreateMap:

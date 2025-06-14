@@ -9,7 +9,6 @@ public class HomeScreenCanvas : MonoBehaviour
     [SerializeField] private Image vinylIcon;
     public TextMeshProUGUI uiText;
 
-    private Button mapButton;
     public Material textMat;
     public Color colorA = Color.red;
     public Color colorB = Color.blue;
@@ -18,15 +17,7 @@ public class HomeScreenCanvas : MonoBehaviour
     private float basePower = 0f;
     private float amplitude = 1f;
 
-    void Awake()
-    {
-        mapButton = GetComponentInChildren<Button>();
-        if (mapButton != null)
-        {
-            mapButton.onClick.AddListener(OnMapButtonClicked);
-        }
-    }
-    
+
     private void Update()
     {
         if (vinylIcon != null)
@@ -40,10 +31,19 @@ public class HomeScreenCanvas : MonoBehaviour
         float glowPower = basePower + Mathf.PingPong(Time.time * speed, amplitude);
         textMat.SetFloat("_GlowPower", glowPower);
     }
-    
+
     public void OnMapButtonClicked()
     {
+        if (mapCanvas == null)
+        {
+            Debug.LogError("Map Canvas is not assigned.");
+            return;
+        }
         mapCanvas.enabled = true;
         gameObject.SetActive(false);
+    }
+    public void LoadInstructionsScene()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("InstructionScene");
     }
 }

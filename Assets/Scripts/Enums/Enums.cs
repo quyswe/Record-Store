@@ -26,17 +26,12 @@ public enum PlaneEdge
 public enum ApplicationState
 {
     Start,
-    CreateMapMode,
-    LoadingMapMode,
-    Instruction,
+    Admin,
     Anchor,
     CloudAnchorInCreateMap,
     WallManager,
     ObjectParent,
     ObjectManager,
     TestMap,
-    // load map scene
-    ListMap,
-    CloudAnchorInLoadMap,
-    View,
+
 }
